@@ -21,16 +21,25 @@ def importShaders(jsonFile):
     #import shaders    
     for shaders in jsonFile["materialPath"]:
         
-        print shaders
+        cmds.file(shaders,i=True,type="mayaAscii")
+        
+        #break
+        
+        #print shaders
         
 def assignShaders(jsonFile,objName):
     
     jsonFile=open(jsonFile)
     jsonFile=json.load(jsonFile)
     for obj in objName:
-        print obj
+        #print obj
         for k,v in jsonFile[obj].iteritems():
-            if k=="shader":
+            if k=="shader":                
+                cmds.select( '%s'%(obj))
+                #slShader = cmds.shadingNode(v, asShader=True)
+                #print obj
+                #cmds.sets("%s"%(obj), edit=True, forceElement="%s"%(v)+"SG")
+                cmds.hyperShade(assign=v)
                 print v
             else:
                 pass
@@ -45,4 +54,4 @@ def assignAttr(jsonFile,objName):
             if k=="shader":
                 pass
             else:
-                print k
+                cmds.setAttr("%s.%s"%(obj,k),v)
