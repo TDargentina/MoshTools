@@ -14,7 +14,7 @@ def shaderExporter():
     
     for obj in objSelected:
         
-        print obj
+        #print obj
         #cmds.select(obj)
         #print obj
         shdGroup=cmds.listConnections(obj,type='shadingEngine')
@@ -60,9 +60,13 @@ def shaderExporter():
             else:
                 cmds.file("%s/%s.ma" %(shaderPath,shaderName[0]), es=True, type="mayaAscii")
                 materialDict.append("%s/%s.ma" %(shaderPath,shaderName[0]))
-    print materialDict        
+    
+    dict1.update({"materialPath":materialDict})
+    dict1.update({"shaderPath":shaderPath})          
     with open('%s/data.json'%(shaderPath), 'wb') as fp:
         json.dump(dict1, fp)
+        materialDict.append('%s/data.json'%(shaderPath))
+        print materialDict
         
     #print dict1
         
