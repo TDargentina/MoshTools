@@ -30,7 +30,10 @@ def assignShaders(jsonFile,objName):
     for obj in objName:
         print obj
         for k,v in jsonFile[obj].iteritems():
-            print k, v
+            if k=="shader":
+                print v
+            else:
+                pass
             
 def assignAttr(jsonFile,objName):
     
@@ -39,4 +42,7 @@ def assignAttr(jsonFile,objName):
     for obj in objName:
         print obj
         for k,v in jsonFile[obj].iteritems():
-            print k, v
+            if k=="shader":
+                pass
+            else:
+                print k
