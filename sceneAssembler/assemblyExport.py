@@ -4,6 +4,7 @@ def shaderExporter():
     import maya.mel as mel
     import os
     import json
+	##test
     
     project=cmds.workspace(q=True, rd=True)
     
