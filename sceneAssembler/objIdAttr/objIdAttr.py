@@ -56,17 +56,34 @@ class test(base_class, form_class):
         self.create_connections()
            
     def create_connections(self):
-        self.process_Btn.clicked.connect(self.processPrefix)
+        self.process_Btn.clicked.connect(self.procesarPrefix)
+        self.cancel_btn.clicked.connect(self.cerrarVentana)
+        
+        
+    def cerrarVentana(self):
+        self.close()               
+        
         
                    
-    def processPrefix(self):
+    def procesarPrefix(self):
         
         prefix=self.lineEdit.text()
         selObj=cmds.ls(sl=True)
         for obj in selObj:
             cmds.select(obj)
-            cmds.addAttr( longName="objIdName", dt='string')
-            cmds.setAttr( '%s.objIdName'%(obj), prefix + "_"+ obj ,type="string")
+            attrName="objIdName"
+            listarAtt=cmds.listAttr( ud=True)
+            for lista in listarAtt:
+                if attrName in lista:
+                    print "ya existe en %s el valor es %s"%(obj,cmds.getAttr("%s.%s"%(obj,attrName)))
+                else:
+                    cmds.addAttr( longName="objIdName", dt='string')
+                    cmds.setAttr( '%s.objIdName'%(obj), prefix + "_"+ obj ,type="string")                    
+            
+            
+        self.close()
+        
+        
  
  
 anchor = maya_main_window()
