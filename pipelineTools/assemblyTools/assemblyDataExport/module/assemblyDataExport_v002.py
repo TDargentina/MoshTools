@@ -1,10 +1,21 @@
+def getMayaSceneFolder():
+	
+	filePath=cmds.file(loc=True,q=True)
+	
+	shaderPath=filePath.split("/scenes")
+	
+	shaderPath=shaderPath[0]+"/shaders"
+	
+	return shaderPath
+
+
 def listSelection():
     import maya.cmds as cmds
     import maya.mel as mel
     
     listSel=cmds.ls(sl=True)
     
-    return listSel
+    print listSel
     
 
 def saveAtrributes(objSelected):
