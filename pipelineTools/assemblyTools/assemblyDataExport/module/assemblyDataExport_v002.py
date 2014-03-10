@@ -54,6 +54,7 @@ def getAtributes():
             shaderName=cmds.ls(cmds.listConnections(shdGroup[0]),materials=1)
             #print shaderName[0]
             objName=cmds.listRelatives(obj, parent=True)
+			objIdName=cmds.getAttr("%s.objIdName"%(objName))
             #print objName[0]
             attrDict={"aiOpaque":cmds.getAttr('%s.aiOpaque'%(obj))
                     ,"aiSelfShadows":cmds.getAttr('%s.aiSelfShadows'%(obj))
@@ -69,6 +70,6 @@ def getAtributes():
                     ,"shader":shaderName[0]                    
                         }
                         
-            dict1.update({objName[0]:attrDict})
+            dict1.update({objIdName:attrDict})
             
     return dict1
