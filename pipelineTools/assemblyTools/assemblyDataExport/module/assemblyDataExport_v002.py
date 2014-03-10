@@ -8,9 +8,9 @@ def getMayaSceneFolder():
 	
 	filePath=cmds.file(loc=True,q=True)
 	
-	shaderPath=filePath.split("/scenes")
+	shaderPath=filePath.rsplit("/",1)
 	
-	shaderPath=shaderPath[0]+"/shaders"
+	#shaderPath=shaderPath[0]+"/shaders/"
 	
 	return shaderPath
 
