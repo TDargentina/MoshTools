@@ -1,3 +1,7 @@
+import maya.cmds as cmds
+import maya.mel as mel
+
+
 def getMayaSceneFolder():
 	
 	import maya.cmds as cmds
@@ -18,26 +22,39 @@ def listSelection():
     listSel=cmds.ls(sl=True)
     
     print listSel
-    
+	
 
-def saveAtrributes():
+def getMaterials():
+    dict1=[]
+    objSelected=cmds.ls(dag=1,o=1,s=1,sl=1)
     
-    import maya.cmds as cmds
-    import maya.mel as mel
-    
-    dict1={}
-    objSelected=cmds.ls(sl=True)
-
     for obj in objSelected:
         shdGroup=cmds.listConnections(obj,type='shadingEngine')
         if shdGroup is None:
             pass
         else:
-            shaderName=cmds.ls(cmds.listConnections(shdGroup),materials=1)           
-                
+			if not shdGroup[0] in dict1:			
+				dict1.append(shdGroup[0])
+    return dict1	
+    
+
+import maya.cmds as cmds
+
+def getAtributes():   
+    
+    dict1={}
+    objSelected=cmds.ls(dag=1,o=1,s=1,sl=1)
+    
+    for obj in objSelected:
+        shdGroup=cmds.listConnections(obj,type='shadingEngine')
+        if shdGroup is None:
+            pass
+            
+        else:
+            shaderName=cmds.ls(cmds.listConnections(shdGroup[0]),materials=1)
+            #print shaderName[0]
             objName=cmds.listRelatives(obj, parent=True)
-        
-        # atributos a guardar, tambien se guarda el nombre del shader asignado a la geometria
+            #print objName[0]
             attrDict={"aiOpaque":cmds.getAttr('%s.aiOpaque'%(obj))
                     ,"aiSelfShadows":cmds.getAttr('%s.aiSelfShadows'%(obj))
                     ,"aiVisibleInDiffuse":cmds.getAttr('%s.aiVisibleInDiffuse'%(obj))
@@ -53,17 +70,5 @@ def saveAtrributes():
                         }
                         
             dict1.update({objName[0]:attrDict})
-                        
-            attrDict={}
-            print attrDict
-
-
             
-            #mel.eval("select -r -ne %s"%(shdGroup[0]))
-        
-        
-            #if os.path.exists(shaderPath +"/"+shaderName[0]+".ma"):
-                #print "ya existe el shader"                                
-            #else:
-                #cmds.file("%s/%s.ma" %(shaderPath,shaderName[0]), es=True, type="mayaAscii")
-                #materialDict.append("%s/%s.ma" %(shaderPath,shaderName[0]))
+    return dict1

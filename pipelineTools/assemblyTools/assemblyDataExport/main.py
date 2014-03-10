@@ -9,7 +9,7 @@ import maya.cmds as cmds
 pathModule="C:/Users/fidel/Documents/GitHub/MoshTools/pipelineTools/"
 
 if pathModule in sys.path:
-    print "el path existe"
+    print "el modulo existe"
     
 else:
     sys.path.append(pathModule)    
@@ -50,10 +50,20 @@ class test(base_class, form_class):
         
     def setConnections(self):
     	self.fileBtn.clicked.connect(self.selectOutput)
-    	self.cancelBtn.clicked.connect(self.closeWindow)    	
+    	self.cancelBtn.clicked.connect(self.closeWindow)
+        self.exportBtn.clicked.connect(self.processBtn)
     	
     def closeWindow(self):
 		self.close()
+		
+    def processBtn(self):
+        if self.shaderCheckBox.checkState() == QtCore.Qt.CheckState.Checked:
+            self.attributes=assemblyDataExport_v002.getAtributes()
+            print self.attributes
+        
+        if self.JsonCheckBox.checkState() == QtCore.Qt.CheckState.Checked:
+		    self.materials=assemblyDataExport_v002.getMaterials()
+		    print self.materials
        
     def selectOutput(self):
         
@@ -69,7 +79,14 @@ class test(base_class, form_class):
     	mayaPath=assemblyDataExport_v002.getMayaSceneFolder()
     	self.outputLineEdit.setText(mayaPath + "/" + ".json")
     	
-    	        
+	def saveFiles():
+	    
+	    for shGr in self.materials:      
+	    
+            mel.eval("select -r -ne %s"%(shGr))
+            cmds.file("%s/%s.ma" %(shaderPath,shaderName[0]), es=True, type="mayaAscii")
+	    
+	    
         
         
 anchor = maya_main_window()

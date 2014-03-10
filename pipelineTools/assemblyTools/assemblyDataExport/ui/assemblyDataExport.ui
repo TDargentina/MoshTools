@@ -39,12 +39,18 @@
        <property name="text">
         <string>Export shaders</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="JsonCheckBox">
        <property name="text">
         <string>Export Json Data Connections</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
