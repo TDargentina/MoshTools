@@ -2,6 +2,32 @@ import pymel.core as pm
 import os
 import json
 
+def getData():
+    
+    shaderPath="Y:/TRABAJOS/PECERA_MALVINAS/1_Shot_Related/_ASSETS_GENERALES/04_SHADING/2_EXPORTS/shaders/"
+    listFiles=os.listdir(shaderPath)
+    fileteredList=[]
+    for list in listFiles:
+        if "shd" in list:
+            fileteredList.append(list)
+            
+    return fileteredList
+    
+
+def assignShaders(shadersName):
+    
+    objSelected=pm.ls(sl=True)
+    for obj in objSelected:
+        
+        
+        
+    #shaderPath="Y:/TRABAJOS/PECERA_MALVINAS/1_Shot_Related/_ASSETS_GENERALES/04_SHADING/2_EXPORTS/shaders/"
+    #json_data=open(jsonFilePath).read()
+    #jsonList = json.loads(json_data)
+    
+       
+    
+
 
 def shaderImporter():
     
@@ -47,3 +73,4 @@ def shaderImporter():
         else:
             
             print "el shader existe en la escena"
+            
