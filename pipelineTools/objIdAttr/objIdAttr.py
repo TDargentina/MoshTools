@@ -73,10 +73,13 @@ class test(base_class, form_class):
         attrName="objIdName"
         listarAtt=cmds.listAttr( ud=True)
         for obj in selObj:
-            cmds.select(obj)        
+            cmds.select(obj)
+			if "|" in obj:
+				obj=obj.split("|")
+				obj=obj[-1]
             
             if not listarAtt:
-                print "entre"
+			
                 cmds.addAttr( longName="objIdName", dt='string')
                 cmds.setAttr( '%s.objIdName'%(obj), prefix + "_"+ obj ,type="string")
             else:
