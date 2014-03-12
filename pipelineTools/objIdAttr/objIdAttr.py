@@ -55,7 +55,7 @@ class test(base_class, form_class):
     def create_connections(self):
         self.process_Btn.clicked.connect(self.procesarPrefix)
         self.cancel_btn.clicked.connect(self.cerrarVentana)
-        self.overWriteCheckBox.clicked.connect(self.testPrint)
+        #self.overWriteCheckBox.clicked.connect(self.testPrint)
         
     #def testPrint(self):
         #print self.overWriteCheckBox.checkState()
@@ -74,12 +74,12 @@ class test(base_class, form_class):
         listarAtt=cmds.listAttr( ud=True)
         for obj in selObj:
             cmds.select(obj)
-			if "|" in obj:
-				obj=obj.split("|")
-				obj=obj[-1]
+            if "|" in obj:
+                obj=obj.split("|")
+                obj=obj[-1]
             
             if not listarAtt:
-			
+            
                 cmds.addAttr( longName="objIdName", dt='string')
                 cmds.setAttr( '%s.objIdName'%(obj), prefix + "_"+ obj ,type="string")
             else:
@@ -89,8 +89,8 @@ class test(base_class, form_class):
                         print "ya existe en %s el valor es %s"%(obj,cmds.getAttr("%s.%s"%(obj,attrName)))
         
                     elif attrName in lista and self.overWriteCheckBox.checkState() == QtCore.Qt.CheckState.Checked:
-                        cmds.setAttr( '%s.objIdName'%(obj), prefix + "_"+ obj ,type="string")	
-				
+                        cmds.setAttr( '%s.objIdName'%(obj), prefix + "_"+ obj ,type="string")   
+                
         self.close()
         
         
