@@ -1,8 +1,9 @@
+import maya.cmds as cmds
 import pymel.core as pm
 import os
 import json
 
-def getData():
+def getShaderData():
     
     shaderPath="Y:/TRABAJOS/PECERA_MALVINAS/1_Shot_Related/_ASSETS_GENERALES/04_SHADING/2_EXPORTS/shaders/"
     listFiles=os.listdir(shaderPath)
@@ -16,18 +17,67 @@ def getData():
 
 def assignShaders(shadersName):
     
-    objSelected=pm.ls(sl=True)
-    for obj in objSelected:
-        
-        
-        
-    #shaderPath="Y:/TRABAJOS/PECERA_MALVINAS/1_Shot_Related/_ASSETS_GENERALES/04_SHADING/2_EXPORTS/shaders/"
-    #json_data=open(jsonFilePath).read()
-    #jsonList = json.loads(json_data)
+    shaderPath="Y:/TRABAJOS/PECERA_MALVINAS/1_Shot_Related/_ASSETS_GENERALES/04_SHADING/2_EXPORTS/shaders/"    
+    #print shadersName
     
-       
+    objSelected=cmds.ls(sl=True)
+    objFiltered=maya.cmds.listRelatives(objSelected, allDescendents=True, noIntermediate=True, fullPath=True, type="mesh")
     
-
+    for obj in objFiltered:
+        
+        objName=cmds.listRelatives(obj, parent=True)
+        #print objName
+        obj= obj.rsplit('|', 1)
+        obj=obj[0]
+        #print obj[0]
+        if '|' in obj[0]:
+            obj=obj[1: ]
+            attrName=cmds.getAttr("%s.objIdName"%(obj))
+            #print attrName.split("_")[0]            
+            for shader in shadersName:                
+                
+                if ".json" in shader and attrName.split("_")[0] in shader:
+                    
+                    json_data=open(shaderPath+shader).read()
+                    jsonList = json.loads(json_data)
+                    shaderName= jsonList[attrName]
+                    cmds.select(obj)
+                    shaderName=shaderName["shader"]
+                    cmds.hyperShade(assign=shaderName)
+    cmds.select(objSelected)
+                    
+def assignAttributes(shadersName):
+    
+    shaderPath="Y:/TRABAJOS/PECERA_MALVINAS/1_Shot_Related/_ASSETS_GENERALES/04_SHADING/2_EXPORTS/shaders/"    
+    #print shadersName
+    
+    objSelected=cmds.ls(sl=True)
+    objFiltered=maya.cmds.listRelatives(objSelected, allDescendents=True, noIntermediate=True, fullPath=True, type="mesh")
+    
+    for obj in objFiltered:
+        
+        objName=cmds.listRelatives(obj, parent=True)
+        #print objName
+        obj= obj.rsplit('|', 1)
+        obj=obj[0]
+        #print obj[0]
+        if '|' in obj[0]:
+            obj=obj[1: ]
+            attrName=cmds.getAttr("%s.objIdName"%(obj))
+            #print attrName.split("_")[0]            
+            for shader in shadersName:                
+                
+                if ".json" in shader and attrName.split("_")[0] in shader:
+                    
+                    json_data=open(shaderPath+shader).read()
+                    jsonList = json.loads(json_data)
+                    shaderName= jsonList[attrName]
+                    
+                    for k,v in shaderName.iteritems():
+                        
+                        if not k =="shader":
+                            #print k
+                            cmds.setAttr('%s.%s'%(obj,k), v)
 
 def shaderImporter():
     
@@ -73,4 +123,3 @@ def shaderImporter():
         else:
             
             print "el shader existe en la escena"
-            
