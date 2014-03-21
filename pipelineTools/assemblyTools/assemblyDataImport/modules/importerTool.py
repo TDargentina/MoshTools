@@ -13,6 +13,13 @@ def getShaderData():
             fileteredList.append(list)
             
     return fileteredList
+	
+
+def test():
+	
+	print "estoy dentro de un modulo externo"
+	
+	
     
 
 def assignShaders(shadersName):
