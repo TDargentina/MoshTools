@@ -92,6 +92,10 @@ def shaderImporter():
     listFiles=os.listdir(shaderPath)
     listaMa=[]
     checklist=[]
+	jsonFilePath=cmds.file(q=1, sn=1)
+	jsonFilePath=jsonFilePath.rsplit("/",2)
+	jsonFilePath=jsonFilePath[0] + "/data/shaderFile.json"
+	
     jsonFilePath="Y:/TRABAJOS/PECERA_MALVINAS/1_Shot_Related/004/10/2_3D_Related/2_Assets_Toma/04_SCENE_COMPOSING/1_PROYECTOS/1_MAYA/data/shader.json"
     
     if not os.path.exists(jsonFilePath):        
